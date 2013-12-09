@@ -37,5 +37,5 @@ If you're using moonshine_multiserver, or have other servers that will need to a
 * open 9200 for any server that needs access to the HTTP interface.
 * open 9300 for any server that needs access to the TCP Transport interface (this include any elasticsearch servers in the cluster).
 
-If you have multiple servers in your cluster, you'll also need to set <code>configuration[:elasticsearch][:unicast_hosts] to an array that looks something like: <code>['10.0.1.2:9300', '10.0.1.3:9300']</code>.  That array should contain *all* the servers in the cluster.  You should probably also set <code>:listen_address</code> to the internal IP address for the server.
+If you have multiple servers in your cluster, you'll also need to set <code>configuration[:elasticsearch][:unicast_hosts]</code> to an array that looks something like: <code>['10.0.1.2:9300', '10.0.1.3:9300']</code>.  That array should contain *all* the servers in the cluster.  You should probably also set <code>:listen_address</code> to the internal IP address for the server.
 
