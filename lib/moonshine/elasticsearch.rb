@@ -25,7 +25,7 @@ module Moonshine
         :unless => 'ls /etc/apt/sources.list.d/ | grep webupd8team-java-lucid.list'
 
       file '/tmp/java.preseed',
-        :content => template("java.preseed"),
+        :content => template(File.join(File.dirname(__FILE__), '..', '..', 'templates',"java.preseed")),
         :ensure => :exists
 
       exec 'java apt-get update',
@@ -90,7 +90,7 @@ module Moonshine
     def elasticsearch_config
 
       file '/etc/init.d/elasticsearch',
-        :content => template('elasticsearch.initd.erb'),
+        :content => template(File.join(File.dirname(__FILE__), '..', '..', 'templates','elasticsearch.initd.erb')),
         :ensure => :present,
         :owner => 'root',
         :mode => '0655',
@@ -102,14 +102,14 @@ module Moonshine
 
       file "/etc/elasticsearch/elasticsearch.yml",
         :ensure => :present,
-        :content => template('elasticsearch.yml.erb'),
+        :content => template(File.join(File.dirname(__FILE__), '..', '..', 'templates','elasticsearch.yml.erb')),
         :owner => 'root',
         :require => [file('/etc/elasticsearch'), exec('install elasticsearch')],
         :notify => service('elasticsearch')
 
       file "/etc/elasticsearch/logging.yml",
         :ensure => :present,
-        :content => template("logging.yml.erb"),
+        :content => template(File.join(File.dirname(__FILE__), '..', '..', 'templates',"logging.yml.erb")),
         :owner => 'root',
         :require => [file('/etc/elasticsearch'), exec('install elasticsearch')],
         :notify => service('elasticsearch')
@@ -125,6 +125,14 @@ module Moonshine
         :ensure => :running,
         :require => [file("/etc/elasticsearch/elasticsearch.yml"), file("/etc/elasticsearch/logging.yml")],
         :provider => :init
+    end
+    
+    def elasticsearch_config_boolean(key,default)
+      if key.nil?
+        default ? 'true' : 'false'
+      else
+        ((!!key) == true) ? 'true' : 'false'
+      end
     end
     
   end
