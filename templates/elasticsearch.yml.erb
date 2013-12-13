@@ -354,6 +354,9 @@ discovery.zen.ping.unicast.hosts: <%= configuration[:elasticsearch][:unicast_hos
 # See <http://elasticsearch.org/tutorials/2011/08/22/elasticsearch-on-ec2.html>
 # for a step-by-step tutorial.
 
+################################## Scripting #################################
+
+script.disable_dynamic: true # This should always be true.
 
 ################################## Slow Log ##################################
 
