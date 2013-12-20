@@ -83,7 +83,8 @@ module Moonshine
         :cwd => '/tmp',
         :user => 'root',
         :creates => "/usr/share/elasticsearch/lib/elasticsearch-#{version}.jar",
-        :require => [exec('download elasticsearch'), package('oracle-java7-installer'), file('/etc/init.d/elasticsearch')]
+        :require => [exec('download elasticsearch'), package('oracle-java7-installer'), file('/etc/init.d/elasticsearch')],
+        :notify => service('elasticsearch')
 
     end
 
