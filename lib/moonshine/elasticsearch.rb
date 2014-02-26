@@ -8,6 +8,24 @@ module Moonshine
       recipe :elasticsearch_service
     end
 
+    def elasticsearch_plugin(opts={})
+      raise "Missing required options: :path, :provides" if opts.keys.empty?
+      raise "Missing required option: :path" if opts[:path].nil?
+      raise "Missing required option: :provides" if opts[:provides].nil?
+
+      plugin_cmd = "/usr/share/elasticsearch/bin/plugin"
+      if opts[:url]
+        plugin_cmd " -f #{opts[:url]}"
+      end
+      plugin_cmd << " -i #{opts[:path]}"
+      
+      exec "install elasticsearch plugin #{opts[:provides]}",
+        :command => plugin_cmd,
+        :require => [exec("install elasticsearch")],
+        :notify => service("elasticsearch"),
+        :creates => "/usr/share/elasticsearch/plugins/#{opts[:provides]}"
+    end
+
     def elasticsearch_dependencies
       package 'openjdk-6-jdk', 
         :ensure => :absent
