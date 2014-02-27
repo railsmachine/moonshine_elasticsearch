@@ -25,7 +25,7 @@ Make sure you have the plugger gem in your Gemfile and then run:
 In your config/moonshine.yml:
 
 <pre><code>:elasticsearch:
-  :version: 0.90.7
+  :version: 0.90.12
   :cluster_name: mycluster</code></pre>
   
 And then in your manifest:
@@ -54,4 +54,4 @@ end</code></pre>
 
 The <code>provides</code> option should be the directory it creates in /usr/share/elasticsearch/plugins.
 
-The <code>elastchsearc_plugin</code> method also supports an <code>url</code> option if you need to download the plugin from somewhere else (usually for third-party plugins).
+The <code>elasticsearch_plugin</code> method also supports an <code>url</code> option if you need to download the plugin from somewhere else (usually for third-party plugins).
