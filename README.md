@@ -41,7 +41,7 @@ If you have multiple servers in your cluster, you'll also need to set <code>conf
 
 ## Plugins
 
-We now support installing plugins via manifests!  You just need to add the following to your manifest:
+We now support installing [plugins](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-plugins.html) via manifests!  You just need to add the following to your manifest:
 
 <pre><code>recipe :elasticsearch_plugins
   
