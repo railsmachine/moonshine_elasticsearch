@@ -25,7 +25,7 @@ Make sure you have the plugger gem in your Gemfile and then run:
 In your config/moonshine.yml:
 
 <pre><code>:elasticsearch:
-  :version: 0.90.7
+  :version: 0.90.12
   :cluster_name: mycluster</code></pre>
   
 And then in your manifest:
@@ -41,7 +41,7 @@ If you have multiple servers in your cluster, you'll also need to set <code>conf
 
 ## Plugins
 
-We now support installing plugins via manifests!  You just need to add the following to your manifest:
+We now support installing [plugins](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-plugins.html) via manifests!  You just need to add the following to your manifest:
 
 <pre><code>recipe :elasticsearch_plugins
   
@@ -54,4 +54,4 @@ end</code></pre>
 
 The <code>provides</code> option should be the directory it creates in /usr/share/elasticsearch/plugins.
 
-The <code>elastchsearc_plugin</code> method also supports an <code>url</code> option if you need to download the plugin from somewhere else (usually for third-party plugins).
+The <code>elasticsearch_plugin</code> method also supports an <code>url</code> option if you need to download the plugin from somewhere else (usually for third-party plugins).
