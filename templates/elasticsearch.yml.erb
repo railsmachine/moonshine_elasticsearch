@@ -386,3 +386,19 @@ index.indexing.slowlog.threshold.index.trace: <%= configuration[:elasticsearch][
 #monitor.jvm.gc.ConcurrentMarkSweep.warn: 10s
 #monitor.jvm.gc.ConcurrentMarkSweep.info: 5s
 #monitor.jvm.gc.ConcurrentMarkSweep.debug: 2s
+
+################################### Thread Pool ##############################
+
+<% if configuration[:elasticsearch][:threadpool] %>
+
+threadpool:
+  <% configuration[:elasticsearch][:threadpool].each do |k,v| %>
+
+  <%= k %>:
+  <% v.each do |sk,sv| -%>
+    <%= sk %>: <%= sv %>
+  <% end -%>
+
+  <% end %>
+
+<% end %>
