@@ -395,7 +395,7 @@ threadpool:
   <% configuration[:elasticsearch][:threadpool].each do |k,v| %>
 
   <%= k %>:
-  <% v.each do |sk,sv| -%>
+  <% v.each do |sk,sv| %>
     <%= sk %>: <%= sv %>
   <% end -%>
 
