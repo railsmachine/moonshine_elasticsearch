@@ -44,7 +44,7 @@ If you have multiple servers in your cluster, you'll also need to set <code>conf
 We now support installing [plugins](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-plugins.html) via manifests!  You just need to add the following to your manifest:
 
 <pre><code>recipe :elasticsearch_plugins
-  
+
 def elasticsearch_plugins
   
   elasticsearch_plugin path: "elasticsearch/elasticsearch-analysis-phonetic/2.0.0.RC1", 
@@ -55,3 +55,6 @@ end</code></pre>
 The <code>provides</code> option should be the directory it creates in /usr/share/elasticsearch/plugins.
 
 The <code>elasticsearch_plugin</code> method also supports an <code>url</code> option if you need to download the plugin from somewhere else (usually for third-party plugins).
+
+***
+Unless otherwise specified, all content copyright &copy; 2014, [Rails Machine, LLC](http://railsmachine.com)
