@@ -152,6 +152,10 @@ index.number_of_replicas: <%= configuration[:elasticsearch][:number_of_replicas]
 #
 # path.data: /path/to/data1,/path/to/data2
 
+<% if configuration[:elasticsearch][:path_data] %>
+path.data: <%= configuration[:elasticsearch][:path_data] %>
+<% end %>
+
 # Path to temporary files:
 #
 # path.work: /path/to/work
