@@ -18,7 +18,7 @@ This plugin sets up an [elasticsearch](http://elasticsearch.org) cluster using u
 
 Make sure you have the plugger gem in your Gemfile and then run:
 
-<pre><code>plugger install git://github.com/railsmachine/moonshine_mariadb.git --force</code></pre>
+<pre><code>plugger install git://github.com/railsmachine/moonshine_elasticsearch.git --force</code></pre>
 
 ## Configuration
 
