@@ -30,7 +30,7 @@ module Moonshine
       package 'openjdk-6-jdk', 
         :ensure => :absent
 
-      package 'python-software-properties',
+      package 'software-properties-common',
         :ensure => :installed
 
       package 'curl',
@@ -39,7 +39,7 @@ module Moonshine
       exec 'java add repo',
         :command => 'add-apt-repository ppa:webupd8team/java',
         :user => 'root',
-        :require => package('python-software-properties'),
+        :require => package('software-properties-common'),
         :unless => 'ls /etc/apt/sources.list.d/ | grep webupd8team-java-lucid.list'
 
       file '/tmp/java.preseed',
@@ -50,38 +50,38 @@ module Moonshine
         :command => 'apt-get update',
         :user => 'root',
         :require => exec('java add repo'),
-        :unless => oracle_java7_check
+        :unless => oracle_java8_check
 
       exec 'java set selections',
         :command => 'debconf-set-selections /tmp/java.preseed',
         :user => 'root',
         :require => [file('/tmp/java.preseed')],
-        :unless => oracle_java7_check
+        :unless => oracle_java8_check
 
       exec 'accept java license',
         :command => "echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections",
         :user => 'root',
         :require => [exec('java apt-get update')],
-        :unless => oracle_java7_check
+        :unless => oracle_java8_check
 
       exec 'see java license',
         :command => "echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections",
         :user => 'root',
         :require => [exec('java apt-get update')],
-        :unless => oracle_java7_check
+        :unless => oracle_java8_check
 
-      package 'oracle-java7-installer',
+      package 'oracle-java8-installer',
         :ensure => :installed,
         :require => [exec('java apt-get update'), exec('java set selections'), exec('accept java license'), exec('see java license')]
 
-      package 'oracle-java7-set-default',
+      package 'oracle-java8-set-default',
         :ensure => :installed,
-        :require => [exec('java apt-get update'), package('oracle-java7-installer')]
+        :require => [exec('java apt-get update'), package('oracle-java8-installer')]
 
     end
 
-    def oracle_java7_check
-      "sudo dpkg -l | grep 'ii  oracle-java7-installer'"
+    def oracle_java8_check
+      "sudo dpkg -l | grep 'ii  oracle-java8-installer'"
     end
 
     def elasticsearch_package
@@ -101,7 +101,7 @@ module Moonshine
         :cwd => '/tmp',
         :user => 'root',
         :creates => "/usr/share/elasticsearch/lib/elasticsearch-#{version}.jar",
-        :require => [exec('download elasticsearch'), package('oracle-java7-installer'), file('/etc/init.d/elasticsearch')],
+        :require => [exec('download elasticsearch'), package('oracle-java8-installer'), file('/etc/init.d/elasticsearch')],
         :notify => service('elasticsearch')
 
     end
@@ -142,8 +142,7 @@ module Moonshine
     def elasticsearch_service
       service 'elasticsearch',
         :ensure => :running,
-        :require => [file("/etc/elasticsearch/elasticsearch.yml"), file("/etc/elasticsearch/logging.yml")],
-        :provider => :init
+        :require => [file("/etc/elasticsearch/elasticsearch.yml"), file("/etc/elasticsearch/logging.yml")]
     end
     
     def elasticsearch_config_boolean(key,default)

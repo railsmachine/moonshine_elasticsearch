@@ -161,8 +161,9 @@ path.data: <%= configuration[:elasticsearch][:path_data] %>
 # path.work: /path/to/work
 
 # Path to log files:
-#
-# path.logs: /path/to/logs
+<% if configuration[:elasticsearch][:path_logs] %>
+path.logs: /path/to/logs
+<% end %>
 
 # Path to where plugins are installed:
 #
@@ -183,7 +184,7 @@ path.data: <%= configuration[:elasticsearch][:path_data] %>
 #
 # Set this property to true to lock the memory:
 #
-# bootstrap.mlockall: true
+bootstrap.mlockall: <%= configuration[:elasticsearch][:mlockall] || true %>
 
 # Make sure that the ES_MIN_MEM and ES_MAX_MEM environment variables are set
 # to the same value, and that the machine has enough memory to allocate
@@ -248,9 +249,11 @@ http.enabled: <%= elasticsearch_config_boolean(configuration[:elasticsearch][:ht
 # There are several types of gateway implementations. For more information,
 # see <http://elasticsearch.org/guide/reference/modules/gateway>.
 
+<% unless configuration[:elasticsearch][:version].start_with?('2.') %>
 # The default gateway type is the "local" gateway (recommended):
 #
 gateway.type: local
+<% end %>
 
 # Settings below control how and when to start the initial recovery process on
 # a full cluster restart (to reuse as much local data as possible when using shared
@@ -360,7 +363,12 @@ discovery.zen.ping.unicast.hosts: <%= configuration[:elasticsearch][:unicast_hos
 
 ################################## Scripting #################################
 
+<% if configuration[:elasticsearch][:version].start_with?('2.') %>
+script.inline: sandbox
+script.indexed: sandbox
+<% else %>
 script.disable_dynamic: true # This should always be true.
+<% end %>
 
 ################################## Slow Log ##################################
 
